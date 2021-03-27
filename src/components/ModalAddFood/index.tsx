@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { FormHandles } from '@unform/core';
 import { FiCheckSquare } from 'react-icons/fi';
 
@@ -27,10 +27,13 @@ interface IModalAddFoodProps {
 export function ModalAddFood({ isOpen, setIsOpen, handleAddFood }: IModalAddFoodProps) {
   const formRef = useRef<FormHandles>(null);
 
-  async function handleSubmit(data: IFoodRequest) {
-    handleAddFood(data);
-    setIsOpen();
-  }
+  const handleSubmit = useCallback(
+    async (data: IFoodRequest) => {
+      handleAddFood(data);
+      setIsOpen();
+    },
+    [handleAddFood, setIsOpen]
+  )
 
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
@@ -41,7 +44,7 @@ export function ModalAddFood({ isOpen, setIsOpen, handleAddFood }: IModalAddFood
         <Input name="name" placeholder="Ex: Moda Italiana" />
         <Input name="price" placeholder="Ex: 19.90" />
         <Input name="description" placeholder="Descrição" />
-        
+
         <button type="submit" data-testid="add-food-button">
           <p className="text">Adicionar Prato</p>
           <div className="icon">

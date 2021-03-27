@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { FiCheckSquare } from 'react-icons/fi';
 
 import { Form } from './styles';
@@ -27,10 +27,13 @@ interface IModalEditFoodProps {
 export function ModalEditFood({ isOpen, setIsOpen, handleUpdateFood, editingFood }: IModalEditFoodProps) {
   const formRef = useRef<FormHandles>(null)
 
-  async function handleSubmit(data: IFoodModel) {
-    handleUpdateFood(data);
-    setIsOpen();
-  }
+  const handleSubmit = useCallback(
+    async (data: IFoodModel) => {
+      handleUpdateFood(data);
+      setIsOpen();
+    },
+    [handleUpdateFood, setIsOpen]
+  )
 
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>

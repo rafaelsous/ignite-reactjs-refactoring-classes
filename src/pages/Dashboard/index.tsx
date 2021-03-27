@@ -33,7 +33,7 @@ export function Dashboard() {
     }
 
     loadFoods()
-  }, [foods])
+  }, [])
 
   async function handleAddFood(food: IFoodRequest) {
     try {
@@ -53,8 +53,10 @@ export function Dashboard() {
         { ...editingFood, ...food },
       ).then(response => response.data)
 
+      console.log(foodUpdated)
+
       setFoods(foods.map(f =>
-        f.id !== foodUpdated.data.id ? f : foodUpdated,
+        f.id !== foodUpdated.id ? f : foodUpdated,
       ))
     } catch (err) {
       console.log(err)
@@ -83,11 +85,13 @@ export function Dashboard() {
   return (
     <>
       <Header openModal={toggleModal} />
+
       <ModalAddFood
         isOpen={isModalOpen}
         setIsOpen={toggleModal}
         handleAddFood={handleAddFood}
       />
+
       <ModalEditFood
         isOpen={isEditModalOpen}
         setIsOpen={toggleEditModal}
