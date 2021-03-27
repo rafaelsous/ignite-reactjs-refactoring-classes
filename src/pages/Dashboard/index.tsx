@@ -53,8 +53,6 @@ export function Dashboard() {
         { ...editingFood, ...food },
       ).then(response => response.data)
 
-      console.log(foodUpdated)
-
       setFoods(foods.map(f =>
         f.id !== foodUpdated.id ? f : foodUpdated,
       ))
